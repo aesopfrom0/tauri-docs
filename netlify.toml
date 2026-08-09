@@ -1,5 +1,11 @@
 [context.deploy-preview.environment]
 TAURI_DOCS_SKIP_IMAGE_OPT = "true"
+# English cards only: enough to eyeball the design without paying for the whole set
+OG_MODE = "sample"
+
+# Persists .cache/og and .cache/og-fonts, so only changed cards are re-rendered
+[[plugins]]
+  package = "/netlify/plugins/cache-og"
 
 [build.environment]
 NODE_VERSION = "24"

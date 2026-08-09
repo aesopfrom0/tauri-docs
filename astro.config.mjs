@@ -404,6 +404,8 @@ export default defineConfig({
         { icon: 'mastodon', label: 'Mastodon', href: 'https://fosstodon.org/@TauriApps' },
         { icon: 'rss', label: 'RSS', href: `${site}/rss` },
       ],
+      // `og:image` / `twitter:image` are set per page in `src/routeData.ts`, which falls back
+      // to `/og.png` for routes without a generated card.
       routeMiddleware: './src/routeData.ts',
       components: {
         Header: './src/components/overrides/Header.astro',
@@ -416,14 +418,6 @@ export default defineConfig({
         LanguageSelect: 'src/components/overrides/LanguageSelect.astro',
       },
       head: [
-        {
-          tag: 'meta',
-          attrs: { property: 'og:image', content: site + '/og.png?v=1' },
-        },
-        {
-          tag: 'meta',
-          attrs: { property: 'twitter:image', content: site + '/og.png?v=1' },
-        },
         {
           tag: 'script',
           attrs: {
