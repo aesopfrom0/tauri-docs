@@ -8,28 +8,30 @@ import { ogImageSlug, ogPages } from './_pages';
  *
  * One image per `docs` entry plus one per release package, keyed by card slug. Pages showing
  * fallback content for an untranslated locale reuse the English card, and every version page
- * under a package reuses that package's, so ~600 images cover all ~4,500 built pages — see
+ * under a package reuses that package's, so ~250 images cover all ~4,150 built pages — see
  * `src/routeData.ts`. The card design itself lives in `src/og/card.ts`.
  */
 
-/** Latin first, then CJK fallbacks so translated titles render glyphs rather than tofu. */
-const { fonts, families } = await fontStack([
-  'inter-400',
-  'noto-sans-400',
-  'noto-sans-sc-400',
-  'noto-sans-jp-400',
-  'noto-sans-kr-400',
-]);
+/**
+ * Latin first, then CJK fallbacks so translated titles render glyphs rather than tofu.
+ *
+ * Skipped when nothing will be rendered, so `OG_MODE=off` doesn't pay a ~7.5 MB download to
+ * produce no cards.
+ */
+const { fonts, families } =
+  Object.keys(ogPages).length === 0
+    ? { fonts: [], families: [] }
+    : await fontStack([
+        'inter-400',
+        'noto-sans-400',
+        'noto-sans-sc-400',
+        'noto-sans-jp-400',
+        'noto-sans-kr-400',
+      ]);
 
 export const { getStaticPaths, GET } = await OGImageRoute({
   pages: ogPages,
-  getSlug: (_, page: (typeof ogPages)[string]) => ogImageSlug(page.slug),
-  getImageOptions: (_, { title, description }: (typeof ogPages)[string]) =>
-    cardOptions({
-      title,
-      description,
-      fonts,
-      families,
-      assetsDir: './src/og/images',
-    }),
+  getSlug: (_, page) => ogImageSlug(page.slug),
+  getImageOptions: (_, { title, description }) =>
+    cardOptions({ title, description, fonts, families }),
 });

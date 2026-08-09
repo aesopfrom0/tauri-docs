@@ -22,8 +22,12 @@ const releasePaths = [
   'src/components/releases/',
   'src/styles/releases.scss',
   'src/release-config.mjs',
+  'src/release-pages.node.mjs',
   'src/routeData.ts',
   'src/content.config.ts',
+  // release pages carry Open Graph cards, generated from this list of packages
+  'src/og/',
+  'src/pages/open-graph/',
   // the generator needs the Node version pinned there
   'netlify.toml',
 ];

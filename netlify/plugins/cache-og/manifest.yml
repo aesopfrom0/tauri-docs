@@ -1,7 +1,0 @@
-name: cache-og
-inputs:
-  - name: paths
-    description: Directories to persist between builds, relative to the repository root.
-    default:
-      - .cache/og
-      - .cache/og-fonts

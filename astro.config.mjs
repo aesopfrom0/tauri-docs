@@ -15,7 +15,7 @@ import lunaria from '@lunariajs/starlight';
 import { readFileSync } from 'fs';
 import nsisGrammar from './src/langs/nsis.tmLanguage.json';
 import pbxprojGrammar from './src/langs/pbxproj.tmLanguage.json';
-import { hasGeneratedReleasePages } from './src/release-config.mjs';
+import { hasGeneratedReleasePages } from './src/release-pages.node.mjs';
 
 const nsis = {
   ...nsisGrammar,

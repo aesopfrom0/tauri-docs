@@ -1,15 +1,9 @@
-import { existsSync, readdirSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-
-const contentDir = fileURLToPath(new URL('./content/releases', import.meta.url));
-
+/**
+ * Safe to import from anywhere, including the browser bundle and route middleware.
+ *
+ * Nothing here may touch `node:` or resolve paths from `import.meta.url` — the release
+ * filesystem probe lives in `release-pages.node.mjs` for exactly that reason.
+ */
 export function isReleasePage(pathname) {
   return pathname.startsWith('/release/');
-}
-
-export function hasGeneratedReleasePages() {
-  if (!existsSync(contentDir)) {
-    return false;
-  }
-  return readdirSync(contentDir, { withFileTypes: true }).some((entry) => entry.isDirectory());
 }

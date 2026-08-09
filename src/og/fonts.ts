@@ -6,8 +6,8 @@ import path from 'node:path';
  *
  * CanvasKit's `FontMgr` only accepts TTF/OTF, but the `@fontsource/*` npm packages ship
  * woff2/woff only, so these are pulled from the Fontsource API rather than added as
- * dependencies. They land in `.cache/og-fonts/`, which is preserved across Netlify builds
- * (see `netlify.toml`), so the ~7.5 MB download happens once rather than on every build.
+ * dependencies. They land under `node_modules/.cache/`, which Netlify's node_modules cache
+ * preserves across builds, so the ~7.5 MB download happens once rather than on every build.
  *
  * Each entry pairs a file with the family name CanvasKit reports for it, because the font
  * stack has to name families exactly as CanvasKit parses them out of the file — astro-og-canvas
@@ -46,7 +46,7 @@ const catalog = {
 
 export type FontName = keyof typeof catalog;
 
-const cacheDir = '.cache/og-fonts';
+const cacheDir = 'node_modules/.cache/og-fonts';
 
 async function ensureFont(name: FontName): Promise<string | undefined> {
   const { file: filename, url } = catalog[name];
